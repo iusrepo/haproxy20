@@ -5,7 +5,7 @@
 %define haproxy_datadir %{_datadir}/haproxy
 
 Name:           haproxy
-Version:        1.3.14
+Version:        1.3.14.2
 Release:        1%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
@@ -44,8 +44,8 @@ availability environments. Indeed, it can:
 
 %build
 # No configure script is present, it is all done via make flags
-# FC 7 is linux 2.6 so using linux26 as target.
-make %{?_smp_mflags} CPU="generic" TARGET="linux26" REGEX="pcre" ADDINC="%{optflags}"
+# FC 7 and up is linux 2.6 so using linux26 as target.
+make %{?_smp_mflags} CPU="generic" TARGET="linux26" USE_PCRE=1 ADDINC="%{optflags}"
 
 
 %install
@@ -56,6 +56,7 @@ rm -rf %{buildroot}
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{haproxy_confdir}/%{name}.cfg
 %{__install} -d -m 0755 %{buildroot}%{haproxy_home}
 %{__install} -d -m 0755 %{buildroot}%{haproxy_datadir}
+%{__install} -p -D -m 0644 ./doc/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
 for httpfile in $(find ./examples/errorfiles/ -type f) 
 do
     %{__install} -p -m 0644 $httpfile %{buildroot}%{haproxy_datadir}
@@ -112,10 +113,16 @@ fi
 %config(noreplace) %{haproxy_confdir}/%{name}.cfg
 %{_initrddir}/%{name}
 %{_sbindir}/%{name}
+%{_mandir}/man1/%{name}.1.gz
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 
 %changelog
+* Sun Jan 20 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.3.14.2-1
+- update to 1.3.14.2
+- update make flags that changed with this upstream release
+- added man page installation
+
 * Sun Dec 16 2007 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.3.14-1
 - update to 1.3.14
 
