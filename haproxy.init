@@ -73,7 +73,7 @@ reload() {
         return 1
     fi
     echo -n $"Reloading $prog: "
-    $exec -p /var/run/$prog.pid -sf $(cat /var/run/$prog.pid)
+    $exec -D -f /etc/$prog/$prog.cfg -p /var/run/$prog.pid -sf $(cat /var/run/$prog.pid)
     retval=$?
     echo
     return $retval
