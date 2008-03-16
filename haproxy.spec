@@ -5,8 +5,8 @@
 %define haproxy_datadir %{_datadir}/haproxy
 
 Name:           haproxy
-Version:        1.3.14.2
-Release:        4%{?dist}
+Version:        1.3.14.3
+Release:        1%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -122,6 +122,9 @@ fi
 
 
 %changelog
+* Sun Mar 16 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.3.14.3-1
+- update to 1.3.14.3
+
 * Sat Mar 01 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.3.14.2-4
 - apply the gcc 4.3 patch to the build process
 
