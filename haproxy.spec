@@ -5,20 +5,17 @@
 %define haproxy_datadir %{_datadir}/haproxy
 
 Name:           haproxy
-Version:        1.3.14.4
+Version:        1.3.14.6
 Release:        1%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
-License:        GPLv2+ and MIT
+License:        GPLv2+
 
 URL:            http://haproxy.1wt.eu/
 Source0:        http://haproxy.1wt.eu/download/1.3/src/haproxy-%{version}.tar.gz
 Source1:        %{name}.init
 Source2:        %{name}.cfg
-
-Patch0:         haproxy-gcc43-compat.patch
-
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  pcre-devel 
@@ -44,7 +41,6 @@ availability environments. Indeed, it can:
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 # No configure script is present, it is all done via make flags
@@ -122,6 +118,11 @@ fi
 
 
 %changelog
+* Sat Jun 28 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.3.14.6-1
+- update to 1.3.14.6
+- remove gcc 4.3 patch, it has been applied upstream
+- remove MIT license as that code has been removed from upstream
+
 * Mon Apr 14 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.3.14.4-1
 - update to 1.3.14.4
 
