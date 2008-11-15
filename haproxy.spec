@@ -46,13 +46,14 @@ availability environments. Indeed, it can:
 %build
 # No configure script is present, it is all done via make flags
 # FC 7 and up is linux 2.6 so using linux26 as target.
+
+# Recommended optimization option for x86 builds
+regparm_opts=
 %ifarch %ix86
-USE_REGPARM=1
-%else
-USE_REGPARM=0
+regparm_opts="USE_REGPARM=1"
 %endif
 
-make %{?_smp_mflags} CPU="generic" TARGET="linux26" USE_PCRE=1 ADDINC="%{optflags}" USE_REGPARM=${USE_REGPARM}
+make %{?_smp_mflags} CPU="generic" TARGET="linux26" USE_PCRE=1 ${regparm_opts} ADDINC="%{optflags}"
 
 
 %install
