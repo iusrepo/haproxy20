@@ -49,7 +49,7 @@ availability environments. Indeed, it can:
 
 # Recommended optimization option for x86 builds
 regparm_opts=
-%ifarch %ix86
+%ifarch %ix86 x86_64
 regparm_opts="USE_REGPARM=1"
 %endif
 
