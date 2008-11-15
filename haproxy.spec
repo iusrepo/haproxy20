@@ -5,7 +5,7 @@
 %define haproxy_datadir %{_datadir}/haproxy
 
 Name:           haproxy
-Version:        1.3.14.6
+Version:        1.3.15.6
 Release:        1%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
@@ -42,21 +42,29 @@ availability environments. Indeed, it can:
 %prep
 %setup -q
 
+
 %build
 # No configure script is present, it is all done via make flags
 # FC 7 and up is linux 2.6 so using linux26 as target.
-make %{?_smp_mflags} CPU="generic" TARGET="linux26" USE_PCRE=1 ADDINC="%{optflags}"
+%ifarch %ix86
+USE_REGPARM=1
+%else
+USE_REGPARM=0
+%endif
+
+make %{?_smp_mflags} CPU="generic" TARGET="linux26" USE_PCRE=1 ADDINC="%{optflags}" USE_REGPARM=${USE_REGPARM}
 
 
 %install
 rm -rf %{buildroot}
-# there is no install make target, only one file is created during build
-%{__install} -p -D -m 0755 %{name} %{buildroot}%{_sbindir}/%{name}
+make install-bin DESTDIR=%{buildroot} PREFIX=%{_prefix} MANDIR=%{_mandir}
+make install-man DESTDIR=%{buildroot} PREFIX=%{_prefix} MANDIR=%{_mandir}
+
 %{__install} -p -D -m 0755 %{SOURCE1} %{buildroot}%{_initrddir}/%{name}
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{haproxy_confdir}/%{name}.cfg
 %{__install} -d -m 0755 %{buildroot}%{haproxy_home}
 %{__install} -d -m 0755 %{buildroot}%{haproxy_datadir}
-%{__install} -p -D -m 0644 ./doc/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
+
 for httpfile in $(find ./examples/errorfiles/ -type f) 
 do
     %{__install} -p -m 0644 $httpfile %{buildroot}%{haproxy_datadir}
@@ -118,6 +126,11 @@ fi
 
 
 %changelog
+* Sat Nov 15 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.3.15.6-1
+- update to 1.3.15.6
+- use new build targets from upstream
+- add in recommended build options for x86 from upstream
+
 * Sat Jun 28 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.3.14.6-1
 - update to 1.3.14.6
 - remove gcc 4.3 patch, it has been applied upstream
