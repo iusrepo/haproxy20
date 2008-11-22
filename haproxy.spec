@@ -6,7 +6,7 @@
 
 Name:           haproxy
 Version:        1.3.15.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -16,6 +16,10 @@ URL:            http://haproxy.1wt.eu/
 Source0:        http://haproxy.1wt.eu/download/1.3/src/haproxy-%{version}.tar.gz
 Source1:        %{name}.init
 Source2:        %{name}.cfg
+
+# patches from upstream, these will be merged into the next release
+Patch0:         haproxy-1.3-mandir.patch
+Patch1:         haproxy-1.3-error-reporting.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  pcre-devel 
@@ -41,6 +45,8 @@ availability environments. Indeed, it can:
 
 %prep
 %setup -q
+%patch0 -p1 -b .mandir
+%patch1 -p1 -b .error-reporting
 
 
 %build
@@ -58,8 +64,8 @@ make %{?_smp_mflags} CPU="generic" TARGET="linux26" USE_PCRE=1 ${regparm_opts} A
 
 %install
 rm -rf %{buildroot}
-make install-bin DESTDIR=%{buildroot} PREFIX=%{_prefix} MANDIR=%{_mandir}
-make install-man DESTDIR=%{buildroot} PREFIX=%{_prefix} MANDIR=%{_mandir}
+make install-bin DESTDIR=%{buildroot} PREFIX=%{_prefix}
+make install-man DESTDIR=%{buildroot} PREFIX=%{_prefix}
 
 %{__install} -p -D -m 0755 %{SOURCE1} %{buildroot}%{_initrddir}/%{name}
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{haproxy_confdir}/%{name}.cfg
@@ -127,6 +133,9 @@ fi
 
 
 %changelog
+* Sat Nov 22 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.3.15.6-2
+- apply upstream patches 
+
 * Sat Nov 15 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.3.15.6-1
 - update to 1.3.15.6
 - use new build targets from upstream
