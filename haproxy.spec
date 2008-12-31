@@ -5,8 +5,8 @@
 %define haproxy_datadir %{_datadir}/haproxy
 
 Name:           haproxy
-Version:        1.3.15.6
-Release:        2%{?dist}
+Version:        1.3.15.7
+Release:        1%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -16,10 +16,6 @@ URL:            http://haproxy.1wt.eu/
 Source0:        http://haproxy.1wt.eu/download/1.3/src/haproxy-%{version}.tar.gz
 Source1:        %{name}.init
 Source2:        %{name}.cfg
-
-# patches from upstream, these will be merged into the next release
-Patch0:         haproxy-1.3-mandir.patch
-Patch1:         haproxy-1.3-error-reporting.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  pcre-devel 
@@ -45,8 +41,6 @@ availability environments. Indeed, it can:
 
 %prep
 %setup -q
-%patch0 -p1 -b .mandir
-%patch1 -p1 -b .error-reporting
 
 
 %build
@@ -133,6 +127,10 @@ fi
 
 
 %changelog
+* Tue Dec 30 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.3.15.7-1
+- update to 1.3.15.7
+- remove upstream patches, they are now part of source distribution
+
 * Sat Nov 22 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.3.15.6-2
 - apply upstream patches 
 
