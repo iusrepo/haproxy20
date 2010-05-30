@@ -5,7 +5,7 @@
 %define haproxy_datadir %{_datadir}/haproxy
 
 Name:           haproxy
-Version:        1.3.23
+Version:        1.4.6
 Release:        1%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
@@ -54,8 +54,20 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-make %{?_smp_mflags} CPU="generic" TARGET="linux26" USE_PCRE=1 ${regparm_opts} ADDINC="%{optflags}"
+make %{?_smp_mflags} CPU="generic" TARGET="linux26" USE_PCRE=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1
 
+# build the halog contrib program.  It has 2 version halog64 and halog.  Make
+# sure it is installed as 'halog' no matter what.
+halog="halog"
+%ifarch x86_64
+halog="halog64"
+%endif
+
+pushd contrib/halog
+make ${halog}
+mv ${halog} halog.tmp
+mv halog.tmp halog
+popd
 
 %install
 rm -rf %{buildroot}
@@ -67,6 +79,8 @@ make install-man DESTDIR=%{buildroot} PREFIX=%{_prefix}
 %{__install} -p -D -m 0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 %{__install} -d -m 0755 %{buildroot}%{haproxy_home}
 %{__install} -d -m 0755 %{buildroot}%{haproxy_datadir}
+%{__install} -d -m 0755 %{buildroot}%{_bindir}
+%{__install} -p -m 0755 ./contrib/halog/halog %{buildroot}%{_bindir}/halog
 
 for httpfile in $(find ./examples/errorfiles/ -type f) 
 do
@@ -116,8 +130,7 @@ fi
 %doc examples/cttproxy-src.cfg
 %doc examples/haproxy.cfg
 %doc examples/tarpit.cfg
-%doc examples/tcp-splicing-sample.cfg
-%doc CHANGELOG CONTRIB LICENSE README
+%doc CHANGELOG LICENSE README
 %dir %{haproxy_datadir}
 %dir %{haproxy_datadir}/*
 %dir %{haproxy_confdir}
@@ -125,11 +138,15 @@ fi
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %{_initrddir}/%{name}
 %{_sbindir}/%{name}
+%{_bindir}/halog
 %{_mandir}/man1/%{name}.1.gz
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 
 %changelog
+* Sun May 30 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.4.6-1
+- update to 1.4.6
+
 * Thu Feb 18 2010 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.3.23-1
 - update to 1.3.23
 
