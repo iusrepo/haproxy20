@@ -5,7 +5,7 @@
 %define haproxy_datadir %{_datadir}/haproxy
 
 Name:           haproxy
-Version:        1.4.15
+Version:        1.4.18
 Release:        1%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
@@ -13,7 +13,7 @@ Group:          System Environment/Daemons
 License:        GPLv2+
 
 URL:            http://haproxy.1wt.eu/
-Source0:        http://haproxy.1wt.eu/download/1.3/src/haproxy-%{version}.tar.gz
+Source0:        http://haproxy.1wt.eu/download/1.4/src/haproxy-%{version}.tar.gz
 Source1:        %{name}.init
 Source2:        %{name}.cfg
 Source3:        %{name}.logrotate
@@ -132,7 +132,7 @@ fi
 %doc examples/tarpit.cfg
 %doc CHANGELOG LICENSE README
 %dir %{haproxy_datadir}
-%dir %{haproxy_datadir}/*
+%{haproxy_datadir}/*
 %dir %{haproxy_confdir}
 %config(noreplace) %{haproxy_confdir}/%{name}.cfg
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
@@ -144,6 +144,9 @@ fi
 
 
 %changelog
+* Thu Sep 22 2011 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.4.18-1
+- Update to 1.4.18
+
 * Tue Apr 26 2011 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.4.15-1
 - Update to 1.4.15
 
