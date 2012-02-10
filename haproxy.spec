@@ -6,7 +6,7 @@
 
 Name:           haproxy
 Version:        1.4.19
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -144,6 +144,9 @@ fi
 
 
 %changelog
+* Fri Feb 10 2012 Petr Pisar <ppisar@redhat.com> - 1.4.19-2
+- Rebuild against PCRE 8.30
+
 * Sun Jan 29 2012 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.4.19-1
 - Update to 1.4.19
 
