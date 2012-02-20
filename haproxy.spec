@@ -6,7 +6,7 @@
 
 Name:           haproxy
 Version:        1.4.19
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -14,18 +14,19 @@ License:        GPLv2+
 
 URL:            http://haproxy.1wt.eu/
 Source0:        http://haproxy.1wt.eu/download/1.4/src/haproxy-%{version}.tar.gz
-Source1:        %{name}.init
+Source1:        %{name}.service
 Source2:        %{name}.cfg
 Source3:        %{name}.logrotate
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires:  pcre-devel 
+BuildRequires:  pcre-devel
+BuildRequires:  systemd-units
 
 
-Requires(pre):      %{_sbindir}/useradd
-Requires(post):     /sbin/chkconfig
-Requires(preun):    /sbin/chkconfig, /sbin/service
-Requires(postun):   /sbin/service
+Requires(pre):      shadow-utils
+Requires(post):     systemd-units
+Requires(preun):    systemd-units
+Requires(postun):   systemd-units
 
 %description
 HA-Proxy is a TCP/HTTP reverse proxy which is particularly suited for high
@@ -74,7 +75,7 @@ rm -rf %{buildroot}
 make install-bin DESTDIR=%{buildroot} PREFIX=%{_prefix}
 make install-man DESTDIR=%{buildroot} PREFIX=%{_prefix}
 
-%{__install} -p -D -m 0755 %{SOURCE1} %{buildroot}%{_initrddir}/%{name}
+%{__install} -p -D -m 0644 %{SOURCE1} %{buildroot}%{_unitdir}/%{name}.service
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{haproxy_confdir}/%{name}.cfg
 %{__install} -p -D -m 0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 %{__install} -d -m 0755 %{buildroot}%{haproxy_home}
@@ -101,25 +102,33 @@ rm -rf %{buildroot}
 
 
 %pre
-%{_sbindir}/useradd -c "HAProxy user" -s /bin/false -r -d %{haproxy_home} %{haproxy_user} 2>/dev/null || :
+getent group %{haproxy_group} >/dev/null || groupadd -r %{haproxy_group}
+getent passwd %{haproxy_user} >/dev/null || \
+    useradd -r -g %{haproxy_user} -d %{haproxy_home} -s /sbin/nologin \
+    -c "HAProxy user" %{haproxy_user}
+exit 0
 
 
 %post
-/sbin/chkconfig --add %{name}
-    
+if [ $1 -eq 1 ]; then
+    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
+fi
 
 %preun
-if [ $1 = 0 ]; then
-    /sbin/service %{name} stop >/dev/null 2>&1
-    /sbin/chkconfig --del %{name}
-fi  
-    
+if [ $1 -eq 0 ]; then
+    # Package removal, not upgrade
+    /bin/systemctl --no-reload disable %{name}.service > /dev/null 2>&1 || :
+    /bin/systemctl stop %{name}.service > /dev/null 2>&1 || :
+fi
+
 
 %postun
-if [ $1 -ge 1 ]; then
-/sbin/service %{name} condrestart > /dev/null 2>&1 || :
-fi  
- 
+/bin/systemctl daemon-reload >/dev/null 2>&1 || :
+if [ $1 -ge 1 ] ; then
+    # Package upgrade, not uninstall
+    /bin/systemctl try-restart %{name}.service >/dev/null 2>&1 || :
+fi
+
 
 %files
 %defattr(-,root,root,-)
@@ -136,7 +145,7 @@ fi
 %dir %{haproxy_confdir}
 %config(noreplace) %{haproxy_confdir}/%{name}.cfg
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
-%{_initrddir}/%{name}
+%{_unitdir}/%{name}.service
 %{_sbindir}/%{name}
 %{_bindir}/halog
 %{_mandir}/man1/%{name}.1.gz
@@ -144,6 +153,9 @@ fi
 
 
 %changelog
+* Sun Feb 19 2012 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.4.19-3
+- Update to use systemd fixing bug #770305
+
 * Fri Feb 10 2012 Petr Pisar <ppisar@redhat.com> - 1.4.19-2
 - Rebuild against PCRE 8.30
 
