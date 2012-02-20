@@ -6,7 +6,7 @@
 
 Name:           haproxy
 Version:        1.4.19
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -153,6 +153,9 @@ fi
 
 
 %changelog
+* Sun Feb 19 2012 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.4.19-4
+- fix haproxy.services file
+
 * Sun Feb 19 2012 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.4.19-3
 - Update to use systemd fixing bug #770305
 
