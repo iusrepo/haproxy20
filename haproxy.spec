@@ -5,8 +5,8 @@
 %define haproxy_datadir %{_datadir}/haproxy
 
 Name:           haproxy
-Version:        1.4.19
-Release:        4%{?dist}
+Version:        1.4.20
+Release:        1%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -153,6 +153,9 @@ fi
 
 
 %changelog
+* Tue Apr 03 2012 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.4.20-1
+- Update to 1.4.20
+
 * Sun Feb 19 2012 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.4.19-4
 - fix haproxy.services file
 
