@@ -6,7 +6,7 @@
 
 Name:           haproxy
 Version:        1.4.20
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -24,9 +24,9 @@ BuildRequires:  systemd-units
 
 
 Requires(pre):      shadow-utils
-Requires(post):     systemd-units
-Requires(preun):    systemd-units
-Requires(postun):   systemd-units
+Requires(post):     systemd
+Requires(preun):    systemd
+Requires(postun):   systemd
 
 %description
 HA-Proxy is a TCP/HTTP reverse proxy which is particularly suited for high
@@ -110,24 +110,14 @@ exit 0
 
 
 %post
-if [ $1 -eq 1 ]; then
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
+%systemd_post %{name}.service
 
 %preun
-if [ $1 -eq 0 ]; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable %{name}.service > /dev/null 2>&1 || :
-    /bin/systemctl stop %{name}.service > /dev/null 2>&1 || :
-fi
+%systemd_preun %{name}.service
 
 
 %postun
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart %{name}.service >/dev/null 2>&1 || :
-fi
+%systemd_postun_with_restart %{name}.service
 
 
 %files
@@ -153,6 +143,9 @@ fi
 
 
 %changelog
+* Mon Sep 17 2012 Václav Pavlín <vpavlin@redhat.com> - 1.4.20-3
+- Scriptlets replaced with new systemd macros (#850143)
+
 * Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.20-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
