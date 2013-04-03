@@ -5,8 +5,8 @@
 %define haproxy_datadir %{_datadir}/haproxy
 
 Name:           haproxy
-Version:        1.4.22
-Release:        2%{?dist}
+Version:        1.4.23
+Release:        1%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -129,6 +129,10 @@ exit 0
 
 
 %changelog
+* Tue Apr 02 2013 Ryan O'Hara <rohara@redhat.com> - 1.4.23-1
+- Update to 1.4.23 (CVE-2013-1912, #947697)
+- Drop supplementary groups after setuid/setgid (#894626)
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.22-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
