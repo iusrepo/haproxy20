@@ -4,9 +4,11 @@
 %define haproxy_confdir %{_sysconfdir}/haproxy
 %define haproxy_datadir %{_datadir}/haproxy
 
+%global _hardened_build 1
+
 Name:           haproxy
 Version:        1.4.23
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -129,6 +131,9 @@ exit 0
 
 
 %changelog
+* Mon Apr 22 2013 Ryan O'Hara <rohara@redhat.com> - 1.4.23-2
+- Build with PIE flags (#955182)
+
 * Tue Apr 02 2013 Ryan O'Hara <rohara@redhat.com> - 1.4.23-1
 - Update to 1.4.23 (CVE-2013-1912, #947697)
 - Drop supplementary groups after setuid/setgid (#894626)
