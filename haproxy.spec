@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.4.23
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -57,7 +57,7 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-make %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_PCRE=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1
+make %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_PCRE=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}"
 
 # build the halog contrib program.
 pushd contrib/halog
@@ -131,6 +131,9 @@ exit 0
 
 
 %changelog
+* Tue Apr 30 2013 Ryan O'Hara <rohara@redhat.com> - 1.4.23-3
+- Build with PIE flags (#955182)
+
 * Mon Apr 22 2013 Ryan O'Hara <rohara@redhat.com> - 1.4.23-2
 - Build with PIE flags (#955182)
 
