@@ -7,8 +7,8 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.4.23
-Release:        3%{?dist}
+Version:        1.4.24
+Release:        1%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -131,6 +131,9 @@ exit 0
 
 
 %changelog
+* Mon Jun 17 2013 Ryan O'Hara <rohara@redhat.com> - 1.4.24-1
+- Update to 1.4.24 (CVE-2013-2174, #975160)
+
 * Tue Apr 30 2013 Ryan O'Hara <rohara@redhat.com> - 1.4.23-3
 - Build with PIE flags (#955182)
 
