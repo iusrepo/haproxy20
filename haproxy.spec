@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.4.24
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -131,6 +131,9 @@ exit 0
 
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.24-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Mon Jun 17 2013 Ryan O'Hara <rohara@redhat.com> - 1.4.24-1
 - Update to 1.4.24 (CVE-2013-2174, #975160)
 
