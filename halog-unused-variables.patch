@@ -1,0 +1,102 @@
+--- contrib/halog/halog.c.orig	2014-02-02 18:41:29.000000000 -0500
++++ contrib/halog/halog.c	2014-02-21 22:08:19.265000000 -0500
+@@ -456,7 +456,7 @@
+ {
+ 	unsigned int h, m, s, ms;
+ 	unsigned char c;
+-	const char *b, *e;
++	const char *e;
+ 
+ 	h = m = s = ms = 0;
+ 	e = field;
+@@ -471,7 +471,6 @@
+ 	}
+ 
+ 	/* hour + ':' */
+-	b = e;
+ 	while (1) {
+ 		c = *(e++) - '0';
+ 		if (c > 9)
+@@ -482,7 +481,6 @@
+ 		goto out_err;
+ 
+ 	/* minute + ':' */
+-	b = e;
+ 	while (1) {
+ 		c = *(e++) - '0';
+ 		if (c > 9)
+@@ -493,7 +491,6 @@
+ 		goto out_err;
+ 
+ 	/* second + '.' or ']' */
+-	b = e;
+ 	while (1) {
+ 		c = *(e++) - '0';
+ 		if (c > 9)
+@@ -506,7 +503,6 @@
+ 	/* if there's a '.', we have milliseconds */
+ 	if (c == (unsigned char)('.' - '0')) {
+ 		/* millisecond second + ']' */
+-		b = e;
+ 		while (1) {
+ 			c = *(e++) - '0';
+ 			if (c > 9)
+@@ -529,10 +525,10 @@
+ 
+ int main(int argc, char **argv)
+ {
+-	const char *b, *e, *p, *time_field, *accept_field, *source_field;
++	const char *b, *p, *time_field, *accept_field, *source_field;
+ 	const char *filter_term_code_name = NULL;
+ 	const char *output_file = NULL;
+-	int f, last, err;
++	int f, last;
+ 	struct timer *t = NULL;
+ 	struct eb32_node *n;
+ 	struct url_stat *ustat = NULL;
+@@ -761,7 +757,7 @@
+ 				}
+ 			}
+ 
+-			e = field_stop(time_field + 1);
++			field_stop(time_field + 1);
+ 			/* we have field TIME_FIELD in [time_field]..[e-1] */
+ 			p = time_field;
+ 			f = 0;
+@@ -785,17 +781,15 @@
+ 				}
+ 			}
+ 
+-			e = field_stop(time_field + 1);
++			field_stop(time_field + 1);
+ 			/* we have field TIME_FIELD in [time_field]..[e-1], let's check only the response time */
+ 
+ 			p = time_field;
+-			err = 0;
+ 			f = 0;
+ 			while (!SEP(*p)) {
+ 				tps = str2ic(p);
+ 				if (tps < 0) {
+ 					tps = -1;
+-					err = 1;
+ 				}
+ 				if (++f == 4)
+ 					break;
+@@ -1521,7 +1515,7 @@
+ void filter_graphs(const char *accept_field, const char *time_field, struct timer **tptr)
+ {
+ 	struct timer *t2;
+-	const char *e, *p;
++	const char *p;
+ 	int f, err, array[5];
+ 
+ 	if (!time_field) {
+@@ -1532,7 +1526,7 @@
+ 		}
+ 	}
+ 
+-	e = field_stop(time_field + 1);
++	field_stop(time_field + 1);
+ 	/* we have field TIME_FIELD in [time_field]..[e-1] */
+ 
+ 	p = time_field;

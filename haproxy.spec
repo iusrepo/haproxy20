@@ -7,8 +7,8 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.4.24
-Release:        2%{?dist}
+Version:        1.4.25
+Release:        1%{?dist}
 Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -20,9 +20,10 @@ Source1:        %{name}.service
 Source2:        %{name}.cfg
 Source3:        %{name}.logrotate
 
+Patch0:		halog-unused-variables.patch
+
 BuildRequires:  pcre-devel
 BuildRequires:  systemd-units
-
 
 Requires(pre):      shadow-utils
 Requires(post):     systemd
@@ -44,6 +45,7 @@ availability environments. Indeed, it can:
 
 %prep
 %setup -q
+%patch0 -p0
 
 
 %build
@@ -131,6 +133,9 @@ exit 0
 
 
 %changelog
+* Thu Mar 27 2014 Ryan O'Hara <rohara@redhat.com> - 1.4.25-1
+- Update to 1.4.25
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.24-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
