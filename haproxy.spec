@@ -7,20 +7,21 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.4.25
-Release:        2%{?dist}
-Summary:        HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
+Version:        1.5.0
+Release:        1%{?dist}
+Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
 License:        GPLv2+
 
 URL:            http://haproxy.1wt.eu/
-Source0:        http://haproxy.1wt.eu/download/1.4/src/haproxy-%{version}.tar.gz
+Source0:        http://haproxy.1wt.eu/download/1.5/src/haproxy-%{version}.tar.gz
 Source1:        %{name}.service
 Source2:        %{name}.cfg
 Source3:        %{name}.logrotate
+Source4:        halog.1
 
-Patch0:		halog-unused-variables.patch
+Patch0:         halog-unused-variables.patch
 
 BuildRequires:  pcre-devel
 BuildRequires:  systemd-units
@@ -31,48 +32,45 @@ Requires(preun):    systemd
 Requires(postun):   systemd
 
 %description
-HA-Proxy is a TCP/HTTP reverse proxy which is particularly suited for high
+HAProxy is a TCP/HTTP reverse proxy which is particularly suited for high
 availability environments. Indeed, it can:
-- route HTTP requests depending on statically assigned cookies
-- spread the load among several servers while assuring server persistence
-  through the use of HTTP cookies
-- switch to backup servers in the event a main one fails
-- accept connections to special ports dedicated to service monitoring
-- stop accepting connections without breaking existing ones
-- add/modify/delete HTTP headers both ways
-- block requests matching a particular pattern
-
+ - route HTTP requests depending on statically assigned cookies
+ - spread load among several servers while assuring server persistence
+   through the use of HTTP cookies
+ - switch to backup servers in the event a main one fails
+ - accept connections to special ports dedicated to service monitoring
+ - stop accepting connections without breaking existing ones
+ - add, modify, and delete HTTP headers in both directions
+ - block requests matching particular patterns
+ - persists clients to the correct application server depending on
+   application cookies
+ - report detailed status as HTML pages to authenticated users from a URI
+   intercepted from the application
 
 %prep
 %setup -q
 %patch0 -p0
 
-
 %build
-# No configure script is present, it is all done via make flags
-# Kernels of Fedora 11 and up and EL 6 and up are newer than 2.6.28,
-# so using linux2628 as target.
-
-# Recommended optimization option for x86 builds
 regparm_opts=
 %ifarch %ix86 x86_64
 regparm_opts="USE_REGPARM=1"
 %endif
 
-make %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_PCRE=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}"
+%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_PCRE=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}"
 
-# build the halog contrib program.
 pushd contrib/halog
-make ${halog} OPTIMIZE="%{optflags}"
+%{__make} ${halog} OPTIMIZE="%{optflags}"
 popd
 
 %install
-make install-bin DESTDIR=%{buildroot} PREFIX=%{_prefix}
-make install-man DESTDIR=%{buildroot} PREFIX=%{_prefix}
+%{__make} install-bin DESTDIR=%{buildroot} PREFIX=%{_prefix}
+%{__make} install-man DESTDIR=%{buildroot} PREFIX=%{_prefix}
 
 %{__install} -p -D -m 0644 %{SOURCE1} %{buildroot}%{_unitdir}/%{name}.service
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{haproxy_confdir}/%{name}.cfg
 %{__install} -p -D -m 0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
+%{__install} -p -D -m 0644 %{SOURCE4} %{buildroot}%{_mandir}/man1/halog.1
 %{__install} -d -m 0755 %{buildroot}%{haproxy_home}
 %{__install} -d -m 0755 %{buildroot}%{haproxy_datadir}
 %{__install} -d -m 0755 %{buildroot}%{_bindir}
@@ -83,14 +81,12 @@ do
     %{__install} -p -m 0644 $httpfile %{buildroot}%{haproxy_datadir}
 done
 
-# convert all text files to utf8
 for textfile in $(find ./ -type f -name '*.txt')
 do
-    mv $textfile $textfile.old
+    %{__mv} $textfile $textfile.old
     iconv --from-code ISO8859-1 --to-code UTF-8 --output $textfile $textfile.old
-    rm -f $textfile.old
+    %{__rm} -f $textfile.old
 done
-
 
 %pre
 getent group %{haproxy_group} >/dev/null || groupadd -r %{haproxy_group}
@@ -99,19 +95,17 @@ getent passwd %{haproxy_user} >/dev/null || \
     -c "HAProxy user" %{haproxy_user}
 exit 0
 
-
 %post
 %systemd_post %{name}.service
 
 %preun
 %systemd_preun %{name}.service
 
-
 %postun
 %systemd_postun_with_restart %{name}.service
 
-
 %files
+%defattr(-,root,root,-)
 %doc doc/*
 %doc examples/url-switching.cfg
 %doc examples/acl-content-sw.cfg
@@ -127,12 +121,16 @@ exit 0
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %{_unitdir}/%{name}.service
 %{_sbindir}/%{name}
+%{_sbindir}/%{name}-systemd-wrapper
 %{_bindir}/halog
-%{_mandir}/man1/%{name}.1.gz
+%{_mandir}/man1/*
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 
 %changelog
+* Thu Jun 19 2014 Ryan O'Hara <rohara@redhat.com> - 1.5.0-1
+- Update to 1.5.0
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.25-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
