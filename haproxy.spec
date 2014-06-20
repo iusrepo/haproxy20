@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.5.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -24,6 +24,8 @@ Source4:        halog.1
 Patch0:         halog-unused-variables.patch
 
 BuildRequires:  pcre-devel
+BuildRequires:  zlib-devel
+BuildRequires:  openssl-devel
 BuildRequires:  systemd-units
 
 Requires(pre):      shadow-utils
@@ -57,7 +59,7 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_PCRE=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}"
+%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_PCRE=1 USE_ZLIB=1 USE_OPENSSL=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}"
 
 pushd contrib/halog
 %{__make} ${halog} OPTIMIZE="%{optflags}"
@@ -128,6 +130,9 @@ exit 0
 
 
 %changelog
+* Thu Jun 19 2014 Ryan O'Hara <rohara@redhat.com> - 1.5.0-2
+- Build with zlib and openssl support
+
 * Thu Jun 19 2014 Ryan O'Hara <rohara@redhat.com> - 1.5.0-1
 - Update to 1.5.0
 
