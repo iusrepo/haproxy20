@@ -7,8 +7,8 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.5.0
-Release:        2%{?dist}
+Version:        1.5.1
+Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -65,6 +65,10 @@ pushd contrib/halog
 %{__make} ${halog} OPTIMIZE="%{optflags}"
 popd
 
+pushd contrib/iprange
+%{__make} iprange OPTIMIZE="%{optflags}"
+popd
+
 %install
 %{__make} install-bin DESTDIR=%{buildroot} PREFIX=%{_prefix}
 %{__make} install-man DESTDIR=%{buildroot} PREFIX=%{_prefix}
@@ -77,6 +81,7 @@ popd
 %{__install} -d -m 0755 %{buildroot}%{haproxy_datadir}
 %{__install} -d -m 0755 %{buildroot}%{_bindir}
 %{__install} -p -m 0755 ./contrib/halog/halog %{buildroot}%{_bindir}/halog
+%{__install} -p -m 0755 ./contrib/iprange/iprange %{buildroot}%{_bindir}/iprange
 
 for httpfile in $(find ./examples/errorfiles/ -type f) 
 do
@@ -125,11 +130,15 @@ exit 0
 %{_sbindir}/%{name}
 %{_sbindir}/%{name}-systemd-wrapper
 %{_bindir}/halog
+%{_bindir}/iprange
 %{_mandir}/man1/*
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 
 %changelog
+* Tue Jun 24 2014 Ryan O'Hara <rohara@redhat.com> - 1.5.1-1
+- Update to 1.5.1
+
 * Thu Jun 19 2014 Ryan O'Hara <rohara@redhat.com> - 1.5.0-2
 - Build with zlib and openssl support
 
