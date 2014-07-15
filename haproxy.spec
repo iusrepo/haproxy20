@@ -7,21 +7,22 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.5.1
+Version:        1.5.2
 Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
 License:        GPLv2+
 
-URL:            http://haproxy.1wt.eu/
-Source0:        http://haproxy.1wt.eu/download/1.5/src/haproxy-%{version}.tar.gz
+URL:            http://www.haproxy.org/
+Source0:        http://www.haproxy.org/download/1.5/src/haproxy-%{version}.tar.gz
 Source1:        %{name}.service
 Source2:        %{name}.cfg
 Source3:        %{name}.logrotate
 Source4:        halog.1
 
 Patch0:         halog-unused-variables.patch
+Patch1:         iprange-return-type.patch
 
 BuildRequires:  pcre-devel
 BuildRequires:  zlib-devel
@@ -44,14 +45,13 @@ availability environments. Indeed, it can:
  - stop accepting connections without breaking existing ones
  - add, modify, and delete HTTP headers in both directions
  - block requests matching particular patterns
- - persists clients to the correct application server depending on
-   application cookies
- - report detailed status as HTML pages to authenticated users from a URI
+ - report detailed status to authenticated users from a URI
    intercepted from the application
 
 %prep
 %setup -q
 %patch0 -p0
+%patch1 -p0
 
 %build
 regparm_opts=
@@ -59,7 +59,7 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_PCRE=1 USE_ZLIB=1 USE_OPENSSL=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}"
+%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}"
 
 pushd contrib/halog
 %{__make} ${halog} OPTIMIZE="%{optflags}"
@@ -82,11 +82,16 @@ popd
 %{__install} -d -m 0755 %{buildroot}%{_bindir}
 %{__install} -p -m 0755 ./contrib/halog/halog %{buildroot}%{_bindir}/halog
 %{__install} -p -m 0755 ./contrib/iprange/iprange %{buildroot}%{_bindir}/iprange
+%{__install} -p -m 0644 ./examples/errorfiles/* %{buildroot}%{haproxy_datadir}
 
 for httpfile in $(find ./examples/errorfiles/ -type f) 
 do
     %{__install} -p -m 0644 $httpfile %{buildroot}%{haproxy_datadir}
 done
+
+%{__rm} -rf ./examples/errorfiles/
+
+find ./examples/* -type f ! -name "*.cfg" -exec %{__rm} -f "{}" \;
 
 for textfile in $(find ./ -type f -name '*.txt')
 do
@@ -96,10 +101,11 @@ do
 done
 
 %pre
-getent group %{haproxy_group} >/dev/null || groupadd -r %{haproxy_group}
+getent group %{haproxy_group} >/dev/null || \
+    groupadd -r %{haproxy_group}
 getent passwd %{haproxy_user} >/dev/null || \
-    useradd -r -g %{haproxy_user} -d %{haproxy_home} -s /sbin/nologin \
-    -c "HAProxy user" %{haproxy_user}
+    useradd -r -g %{haproxy_user} -d %{haproxy_home} \
+    -s /sbin/nologin -c "haproxy" %{haproxy_user}
 exit 0
 
 %post
@@ -113,17 +119,11 @@ exit 0
 
 %files
 %defattr(-,root,root,-)
-%doc doc/*
-%doc examples/url-switching.cfg
-%doc examples/acl-content-sw.cfg
-%doc examples/content-sw-sample.cfg
-%doc examples/cttproxy-src.cfg
-%doc examples/haproxy.cfg
-%doc examples/tarpit.cfg
-%doc CHANGELOG LICENSE README
+%doc doc/* examples/*
+%doc CHANGELOG LICENSE README ROADMAP VERSION
+%dir %{haproxy_confdir}
 %dir %{haproxy_datadir}
 %{haproxy_datadir}/*
-%dir %{haproxy_confdir}
 %config(noreplace) %{haproxy_confdir}/%{name}.cfg
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %{_unitdir}/%{name}.service
@@ -134,8 +134,10 @@ exit 0
 %{_mandir}/man1/*
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
-
 %changelog
+* Tue Jul 15 2014 Ryan O'Hara <rohara@redhat.com> - 1.5.2-1
+- Update to 1.5.2
+
 * Tue Jun 24 2014 Ryan O'Hara <rohara@redhat.com> - 1.5.1-1
 - Update to 1.5.1
 
