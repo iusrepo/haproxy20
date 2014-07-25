@@ -1,6 +1,6 @@
---- contrib/halog/halog.c.orig	2014-02-02 18:41:29.000000000 -0500
-+++ contrib/halog/halog.c	2014-02-21 22:08:19.265000000 -0500
-@@ -456,7 +456,7 @@
+--- contrib/halog/halog.c.orig	2014-07-25 01:56:07.000000000 -0500
++++ contrib/halog/halog.c	2014-07-25 15:24:56.996876765 -0500
+@@ -462,7 +462,7 @@ int convert_date(const char *field)
  {
  	unsigned int h, m, s, ms;
  	unsigned char c;
@@ -9,7 +9,7 @@
  
  	h = m = s = ms = 0;
  	e = field;
-@@ -471,7 +471,6 @@
+@@ -477,7 +477,6 @@ int convert_date(const char *field)
  	}
  
  	/* hour + ':' */
@@ -17,7 +17,7 @@
  	while (1) {
  		c = *(e++) - '0';
  		if (c > 9)
-@@ -482,7 +481,6 @@
+@@ -488,7 +487,6 @@ int convert_date(const char *field)
  		goto out_err;
  
  	/* minute + ':' */
@@ -25,7 +25,7 @@
  	while (1) {
  		c = *(e++) - '0';
  		if (c > 9)
-@@ -493,7 +491,6 @@
+@@ -499,7 +497,6 @@ int convert_date(const char *field)
  		goto out_err;
  
  	/* second + '.' or ']' */
@@ -33,7 +33,7 @@
  	while (1) {
  		c = *(e++) - '0';
  		if (c > 9)
-@@ -506,7 +503,6 @@
+@@ -512,7 +509,6 @@ int convert_date(const char *field)
  	/* if there's a '.', we have milliseconds */
  	if (c == (unsigned char)('.' - '0')) {
  		/* millisecond second + ']' */
@@ -41,7 +41,40 @@
  		while (1) {
  			c = *(e++) - '0';
  			if (c > 9)
-@@ -529,10 +525,10 @@
+@@ -535,7 +531,7 @@ int convert_date_to_timestamp(const char
+ {
+ 	unsigned int d, mo, y, h, m, s;
+ 	unsigned char c;
+-	const char *b, *e;
++	const char *e;
+ 	time_t rawtime;
+ 	static struct tm * timeinfo;
+ 	static int last_res;
+@@ -622,7 +618,6 @@ int convert_date_to_timestamp(const char
+ 	}
+ 
+ 	/* hour + ':' */
+-	b = e;
+ 	while (1) {
+ 		c = *(e++) - '0';
+ 		if (c > 9)
+@@ -633,7 +628,6 @@ int convert_date_to_timestamp(const char
+ 		goto out_err;
+ 
+ 	/* minute + ':' */
+-	b = e;
+ 	while (1) {
+ 		c = *(e++) - '0';
+ 		if (c > 9)
+@@ -644,7 +638,6 @@ int convert_date_to_timestamp(const char
+ 		goto out_err;
+ 
+ 	/* second + '.' or ']' */
+-	b = e;
+ 	while (1) {
+ 		c = *(e++) - '0';
+ 		if (c > 9)
+@@ -686,10 +679,10 @@ void truncated_line(int linenum, const c
  
  int main(int argc, char **argv)
  {
@@ -54,7 +87,7 @@
  	struct timer *t = NULL;
  	struct eb32_node *n;
  	struct url_stat *ustat = NULL;
-@@ -761,7 +757,7 @@
+@@ -941,7 +934,7 @@ int main(int argc, char **argv)
  				}
  			}
  
@@ -63,7 +96,7 @@
  			/* we have field TIME_FIELD in [time_field]..[e-1] */
  			p = time_field;
  			f = 0;
-@@ -785,17 +781,15 @@
+@@ -965,17 +958,15 @@ int main(int argc, char **argv)
  				}
  			}
  
@@ -82,7 +115,7 @@
  				}
  				if (++f == 4)
  					break;
-@@ -1521,7 +1515,7 @@
+@@ -1701,7 +1692,7 @@ void filter_count_ip(const char *source_
  void filter_graphs(const char *accept_field, const char *time_field, struct timer **tptr)
  {
  	struct timer *t2;
@@ -91,7 +124,7 @@
  	int f, err, array[5];
  
  	if (!time_field) {
-@@ -1532,7 +1526,7 @@
+@@ -1712,7 +1703,7 @@ void filter_graphs(const char *accept_fi
  		}
  	}
  
