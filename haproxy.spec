@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.5.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -135,6 +135,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Wed Aug 06 2014 Ryan O'Hara <rohara@redhat.com> - 1.5.3-2
+- Use haproxy-systemd-wrapper in service file (#1126955)
+
 * Fri Jul 25 2014 Ryan O'Hara <rohara@redhat.com> - 1.5.3-1
 - Update to 1.5.3
 
