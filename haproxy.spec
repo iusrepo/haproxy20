@@ -135,7 +135,7 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
-* Tue Sep 02 2013 Ryan O'Hara <rohara@redhat.com> - 1.5.4-1
+* Tue Sep 02 2014 Ryan O'Hara <rohara@redhat.com> - 1.5.4-1
 - Update to 1.5.4
 
 * Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.5.3-3
