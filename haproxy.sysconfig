@@ -1,0 +1,1 @@
+HAPROXY_OPTIONS="-f /etc/haproxy/haproxy.cfg -p /run/haproxy.pid"

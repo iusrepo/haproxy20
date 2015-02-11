@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.5.11
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -19,7 +19,8 @@ Source0:        http://www.haproxy.org/download/1.5/src/haproxy-%{version}.tar.g
 Source1:        %{name}.service
 Source2:        %{name}.cfg
 Source3:        %{name}.logrotate
-Source4:        halog.1
+Source4:	%{name}.sysconfig
+Source5:        halog.1
 
 Patch0:         halog-unused-variables.patch
 Patch1:         iprange-return-type.patch
@@ -82,7 +83,8 @@ popd
 %{__install} -p -D -m 0644 %{SOURCE1} %{buildroot}%{_unitdir}/%{name}.service
 %{__install} -p -D -m 0644 %{SOURCE2} %{buildroot}%{haproxy_confdir}/%{name}.cfg
 %{__install} -p -D -m 0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
-%{__install} -p -D -m 0644 %{SOURCE4} %{buildroot}%{_mandir}/man1/halog.1
+%{__install} -p -D -m 0644 %{SOURCE4} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
+%{__install} -p -D -m 0644 %{SOURCE5} %{buildroot}%{_mandir}/man1/halog.1
 %{__install} -d -m 0755 %{buildroot}%{haproxy_home}
 %{__install} -d -m 0755 %{buildroot}%{haproxy_datadir}
 %{__install} -d -m 0755 %{buildroot}%{_bindir}
@@ -132,6 +134,7 @@ exit 0
 %{haproxy_datadir}/*
 %config(noreplace) %{haproxy_confdir}/%{name}.cfg
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
+%config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %{_unitdir}/%{name}.service
 %{_sbindir}/%{name}
 %{_sbindir}/%{name}-systemd-wrapper
@@ -141,6 +144,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Wed Feb 11 2015 Ryan O'Hara <rohara@redhat.com> - 1.5.11-3
+- Add sysconfig file
+
 * Tue Feb 10 2015 Ryan O'Hara <rohara@redhat.com> - 1.5.11-2
 - Add tcp-ut bind option to set TCP_USER_TIMEOUT (#1190783)
 
