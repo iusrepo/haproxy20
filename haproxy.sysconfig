@@ -1,1 +1,4 @@
-HAPROXY_OPTIONS="-f /etc/haproxy/haproxy.cfg -p /run/haproxy.pid"
+# Add extra options to the haproxy daemon here. This can be useful for
+# specifying multiple configuration files with multiple -f options.
+# See haproxy(1) for a complete list of options.
+OPTIONS=""

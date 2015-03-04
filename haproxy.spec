@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.5.11
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -144,6 +144,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Wed Mar 04 2015 Ryan O'Hara <rohara@redhat.com> - 1.5.11-4
+- Rework systemd service and sysconfig file
+
 * Wed Feb 11 2015 Ryan O'Hara <rohara@redhat.com> - 1.5.11-3
 - Add sysconfig file
 
