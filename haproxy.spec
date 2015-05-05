@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.5.12
-Release:        %{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
