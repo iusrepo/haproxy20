@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.5.12
-Release:        1%{?dist}
+Release:        %{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -24,9 +24,7 @@ Source5:        halog.1
 
 Patch0:         halog-unused-variables.patch
 Patch1:         iprange-return-type.patch
-Patch2:         haproxy-pattern-oom-error.patch
-Patch3:         haproxy-pattern-delete-acl-map.patch
-Patch4:         haproxy-tcp-user-timeout.patch
+Patch2:         haproxy-tcp-user-timeout.patch
 
 BuildRequires:  pcre-devel
 BuildRequires:  zlib-devel
@@ -57,8 +55,6 @@ availability environments. Indeed, it can:
 %patch0 -p0
 %patch1 -p0
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
 regparm_opts=
@@ -144,6 +140,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Tue May 05 2015 Ryan O'Hara <rohara@redhat.com> - 1.5.12-2
+- Remove unused patches
+
 * Tue May 05 2015 Ryan O'Hara <rohara@redhat.com> - 1.5.12-1
 - Update to 1.5.12 (#1217922)
 
