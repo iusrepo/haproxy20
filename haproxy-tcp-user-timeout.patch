@@ -1,7 +1,7 @@
-From 285871db151bd030d6247e8ee12b415a75c1566e Mon Sep 17 00:00:00 2001
+From efc843e57ea96ea198c63398c454430bc9e6cbcc Mon Sep 17 00:00:00 2001
 From: Willy Tarreau <w@1wt.eu>
 Date: Wed, 4 Feb 2015 00:45:58 +0100
-Subject: [PATCH 3/3] MEDIUM: tcp: implement tcp-ut bind option to set
+Subject: [PATCH] MEDIUM: tcp: implement tcp-ut bind option to set
  TCP_USER_TIMEOUT
 
 On Linux since 2.6.37, it's possible to set the socket timeout for
@@ -23,10 +23,10 @@ Thanks to Thijs Houtenbos and John Eckersberg for the suggestion.
  3 files changed, 55 insertions(+), 1 deletion(-)
 
 diff --git a/doc/configuration.txt b/doc/configuration.txt
-index 3ae6624..634f71a 100644
+index d5ecf6c..b4b7701 100644
 --- a/doc/configuration.txt
 +++ b/doc/configuration.txt
-@@ -8585,6 +8585,19 @@ strict-sni
+@@ -8637,6 +8637,19 @@ strict-sni
    a certificate. The default certificate is not used.
    See the "crt" option for more information.
  
