@@ -7,7 +7,7 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.5.13
+Version:        1.5.14
 Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
@@ -140,6 +140,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Mon Jul 06 2015 Ryan O'Hara <rohara@redhat.com> - 1.5.14-1
+- Update to 1.5.14 (CVE-2015-3281, #1239181)
+
 * Fri Jun 26 2015 Ryan O'Hara <rohara@redhat.com> - 1.5.13-1
 - Update to 1.5.13 (#1236056)
 
