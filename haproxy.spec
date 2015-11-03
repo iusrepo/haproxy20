@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.6.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -71,7 +71,7 @@ pushd contrib/iprange
 popd
 
 %install
-%{__make} install-bin DESTDIR=%{buildroot} PREFIX=%{_prefix}
+%{__make} install-bin DESTDIR=%{buildroot} PREFIX=%{_prefix} TARGET="linux2628"
 %{__make} install-man DESTDIR=%{buildroot} PREFIX=%{_prefix}
 
 %{__install} -p -D -m 0644 %{SOURCE1} %{buildroot}%{_unitdir}/%{name}.service
@@ -138,7 +138,7 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
-* Tue Nov 03 2015 Ryan O'Hara <rohara@redhat.com> - 1.6.2-1
+* Tue Nov 03 2015 Ryan O'Hara <rohara@redhat.com> - 1.6.2-2
 - Update to 1.6.2 (#1276288)
 
 * Fri Oct 30 2015 Ryan O'Hara <rohara@redhat.com> - 1.6.1-1
