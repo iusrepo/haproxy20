@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.6.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -25,6 +25,7 @@ Source5:        halog.1
 Patch0:         halog-unused-variables.patch
 Patch1:         iprange-return-type.patch
 
+BuildRequires:  lua-devel
 BuildRequires:  pcre-devel
 BuildRequires:  zlib-devel
 BuildRequires:  openssl-devel
@@ -60,7 +61,7 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}"
+%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 USE_LUA=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}"
 
 pushd contrib/halog
 %{__make} ${halog} OPTIMIZE="%{optflags}"
@@ -138,6 +139,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Wed Nov 18 2015 Ryan O'Hara <rohara@redhat.com> - 1.6.2-3
+- Enable Lua support
+
 * Tue Nov 03 2015 Ryan O'Hara <rohara@redhat.com> - 1.6.2-2
 - Update to 1.6.2 (#1276288)
 
