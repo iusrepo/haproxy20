@@ -7,8 +7,8 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.6.2
-Release:        3%{?dist}
+Version:        1.6.3
+Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -139,6 +139,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Wed Jan 20 2016 Ryan O'Hara <rohara@redhat.com> - 1.6.3-1
+- Update to 1.6.3 (#1276288)
+
 * Wed Nov 18 2015 Ryan O'Hara <rohara@redhat.com> - 1.6.2-3
 - Enable Lua support
 
