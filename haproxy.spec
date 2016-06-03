@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.6.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -139,6 +139,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Fri Jun 03 2016 Ryan O'Hara <rohara@redhat.com> - 1.6.5-2
+- Utilize system-wide crypto-policies (#1256253)
+
 * Mon May 23 2016 Ryan O'Hara <rohara@redhat.com> - 1.6.5-1
 - Update to 1.6.5 (#1317313)
 
