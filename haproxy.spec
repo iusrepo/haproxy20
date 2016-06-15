@@ -8,22 +8,23 @@
 
 Name:           haproxy
 Version:        1.6.5
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
 License:        GPLv2+
 
 URL:            http://www.haproxy.org/
-Source0:        http://www.haproxy.org/download/1.5/src/haproxy-%{version}.tar.gz
+Source0:        http://www.haproxy.org/download/1.6/src/haproxy-%{version}.tar.gz
 Source1:        %{name}.service
 Source2:        %{name}.cfg
 Source3:        %{name}.logrotate
-Source4:	%{name}.sysconfig
+Source4:        %{name}.sysconfig
 Source5:        halog.1
 
 Patch0:         halog-unused-variables.patch
 Patch1:         iprange-return-type.patch
+Patch2:         fix-reqdeny-crash.patch
 
 BuildRequires:  lua-devel
 BuildRequires:  pcre-devel
@@ -54,6 +55,7 @@ availability environments. Indeed, it can:
 %setup -q
 %patch0 -p0
 %patch1 -p0
+%patch2 -p1
 
 %build
 regparm_opts=
@@ -139,6 +141,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Wed Jun 15 2016 Ryan O'Hara <rohara@redhat.com> - 1.6.5-3
+- Fix reqdeny causing random crashes (CVE-2016-5360, #1346672)
+
 * Fri Jun 03 2016 Ryan O'Hara <rohara@redhat.com> - 1.6.5-2
 - Utilize system-wide crypto-policies (#1256253)
 
