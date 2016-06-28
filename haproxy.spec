@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.6.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -24,7 +24,6 @@ Source5:        halog.1
 
 Patch0:         halog-unused-variables.patch
 Patch1:         iprange-return-type.patch
-Patch2:         fix-reqdeny-crash.patch
 
 BuildRequires:  lua-devel
 BuildRequires:  pcre-devel
@@ -55,7 +54,6 @@ availability environments. Indeed, it can:
 %setup -q
 %patch0 -p0
 %patch1 -p0
-%patch2 -p1
 
 %build
 regparm_opts=
@@ -141,6 +139,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Tue Jun 28 2016 Ryan O'Hara <rohara@redhat.com> - 1.6.6-2
+- Remove patch for CVE-2016-5360
+
 * Tue Jun 28 2016 Ryan O'Hara <rohara@redhat.com> - 1.6.6-1
 - Update to 1.6.6 (#1350426)
 
