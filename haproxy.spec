@@ -7,8 +7,8 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.6.5
-Release:        3%{?dist}
+Version:        1.6.6
+Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -141,6 +141,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Tue Jun 28 2016 Ryan O'Hara <rohara@redhat.com> - 1.6.6-1
+- Update to 1.6.6 (#1350426)
+
 * Wed Jun 15 2016 Ryan O'Hara <rohara@redhat.com> - 1.6.5-3
 - Fix reqdeny causing random crashes (CVE-2016-5360, #1346672)
 
