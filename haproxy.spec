@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.6.7
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -139,6 +139,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Thu Jul 14 2016 Ryan O'Hara <rohara@redhat.com> - 1.6.7-2
+- Fix main frontend in default config file (#1348674)
+
 * Thu Jul 14 2016 Ryan O'Hara <rohara@redhat.com> - 1.6.7-1
 - Update to 1.6.7 (#1356578)
 
