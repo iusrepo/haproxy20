@@ -139,7 +139,7 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
-* Thu Dex 29 2016 Ryan O'Hara <rohara@redhat.com> - 1.7.1-1
+* Thu Dec 29 2016 Ryan O'Hara <rohara@redhat.com> - 1.7.1-1
 - Update to 1.7.1
 
 * Mon Nov 28 2016 Ryan O'Hara <rohara@redhat.com> - 1.7.0-1
