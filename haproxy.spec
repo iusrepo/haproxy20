@@ -7,8 +7,8 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.7.2
-Release:        2%{?dist}
+Version:        1.7.3
+Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -139,6 +139,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Sun Mar 26 2017 Ryan O'Hara <rohara@redhat.com> - 1.7.3-1
+- Update to 1.7.3 (#1413276)
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.7.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
