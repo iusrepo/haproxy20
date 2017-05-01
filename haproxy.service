@@ -3,9 +3,12 @@ Description=HAProxy Load Balancer
 After=syslog.target network.target
 
 [Service]
-EnvironmentFile=/etc/sysconfig/haproxy
-ExecStart=/usr/sbin/haproxy-systemd-wrapper -f /etc/haproxy/haproxy.cfg -p /run/haproxy.pid $OPTIONS
+Environment="CONFIG=/etc/haproxy/haproxy.cfg" "PIDFILE=/run/haproxy.pid"
+ExecStartPre=/usr/sbin/haproxy -f $CONFIG -c -q
+ExecStart=/usr/sbin/haproxy-systemd-wrapper -f $CONFIG -p $PIDFILE
+ExecReload=/usr/sbin/haproxy -f $CONFIG -c -q
 ExecReload=/bin/kill -USR2 $MAINPID
+KillMode=mixed
 
 [Install]
 WantedBy=multi-user.target
