@@ -22,8 +22,8 @@ Source3:        %{name}.logrotate
 Source4:        %{name}.sysconfig
 Source5:        halog.1
 
-Patch0:         halog-unused-variables.patch
-Patch1:         iprange-return-type.patch
+Patch0:         contrib-halog-compliler-warnings.patch
+Patch1:         contrib-iprange-compliler-warnings.patch
 
 BuildRequires:  lua-devel
 BuildRequires:  pcre-devel
@@ -52,8 +52,8 @@ availability environments. Indeed, it can:
 
 %prep
 %setup -q
-%patch0 -p0
-%patch1 -p0
+%patch0 -p1
+%patch1 -p1
 
 %build
 regparm_opts=
@@ -139,6 +139,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Fri Dec 15 2017 Ryan O'Hara <rohara@redhat.com> - 1.8.0-1
+- Update to 1.8.0
+
 * Mon Sep 11 2017 Ryan O'Hara <rohara@redhat.com> - 1.7.9-1
 - Update to 1.7.9 (#1485084)
 
