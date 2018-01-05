@@ -7,7 +7,7 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.8.2
+Version:        1.8.3
 Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
@@ -21,9 +21,6 @@ Source2:        %{name}.cfg
 Source3:        %{name}.logrotate
 Source4:        %{name}.sysconfig
 Source5:        halog.1
-
-Patch0:         contrib-halog-compliler-warnings.patch
-Patch1:         contrib-iprange-compliler-warnings.patch
 
 BuildRequires:  lua-devel
 BuildRequires:  pcre-devel
@@ -52,8 +49,6 @@ availability environments. Indeed, it can:
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 
 %build
 regparm_opts=
@@ -139,6 +134,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Fri Jan 05 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.3-1
+- Update to 1.8.3 (#1528829)
+
 * Wed Dec 27 2017 Ryan O'Hara <rohara@redhat.com> - 1.8.2-1
 - Update to 1.8.2
 
