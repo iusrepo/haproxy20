@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.8.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -127,13 +127,15 @@ exit 0
 %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %{_unitdir}/%{name}.service
 %{_sbindir}/%{name}
-%{_sbindir}/%{name}-systemd-wrapper
 %{_bindir}/halog
 %{_bindir}/iprange
 %{_mandir}/man1/*
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Fri Jan 05 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.3-2
+- Remove haproxy-systemd-wrapper
+
 * Fri Jan 05 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.3-1
 - Update to 1.8.3 (#1528829)
 
