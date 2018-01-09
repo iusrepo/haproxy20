@@ -27,12 +27,10 @@ BuildRequires:  pcre-devel
 BuildRequires:  zlib-devel
 BuildRequires:  openssl-devel
 BuildRequires:  systemd-devel
-BuildRequires:  systemd-units
+BuildRequires:  systemd
 
 Requires(pre):      shadow-utils
-Requires(post):     systemd
-Requires(preun):    systemd
-Requires(postun):   systemd
+%{?systemd_requires}
 
 %description
 HAProxy is a TCP/HTTP reverse proxy which is particularly suited for high
