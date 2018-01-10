@@ -118,7 +118,8 @@ exit 0
 %files
 %defattr(-,root,root,-)
 %doc doc/* examples/*
-%doc CHANGELOG LICENSE README ROADMAP VERSION
+%doc CHANGELOG README ROADMAP VERSION
+%license LICENSE
 %dir %{haproxy_confdir}
 %dir %{haproxy_datadir}
 %{haproxy_datadir}/*
