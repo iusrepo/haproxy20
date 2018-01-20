@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.8.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -133,6 +133,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Sat Jan 20 2018 Björn Esser <besser82@fedoraproject.org> - 1.8.3-3
+- Rebuilt for switch to libxcrypt
+
 * Fri Jan 05 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.3-2
 - Remove haproxy-systemd-wrapper
 
