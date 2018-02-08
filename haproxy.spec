@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.8.3
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -59,11 +59,11 @@ regparm_opts="USE_REGPARM=1"
 %{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 USE_LUA=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}"
 
 pushd contrib/halog
-%{__make} ${halog} OPTIMIZE="%{optflags}"
+%{__make} ${halog} OPTIMIZE="%{optflags} %{build_ldflags}"
 popd
 
 pushd contrib/iprange
-%{__make} iprange OPTIMIZE="%{optflags}"
+%{__make} iprange OPTIMIZE="%{optflags} %{build_ldflags}"
 popd
 
 %install
@@ -134,6 +134,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Thu Feb  8 2018 Florian Weimer <fweimer@redhat.com> - 1.8.3-5
+- Build halog and iprange with linker flags from redhat-rpm-config
+
 * Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.8.3-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
