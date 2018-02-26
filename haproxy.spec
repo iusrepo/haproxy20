@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.8.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -26,6 +26,7 @@ BuildRequires:  lua-devel
 BuildRequires:  pcre-devel
 BuildRequires:  zlib-devel
 BuildRequires:  openssl-devel
+BuildRequires:  systemd-devel
 BuildRequires:  systemd-units
 
 Requires(pre):      shadow-utils
@@ -56,7 +57,7 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 USE_LUA=1 USE_CRYPT_H=1 ${regparm_opts} ADDINC="%{optflags}" USE_LINUX_TPROXY=1 ADDLIB="%{__global_ldflags}"
+%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 USE_LUA=1 USE_CRYPT_H=1 USE_SYSTEMD=1 USE_LINUX_TPROXY=1 ${regparm_opts} ADDINC="%{optflags}" ADDLIB="%{__global_ldflags}"
 
 pushd contrib/halog
 %{__make} ${halog} OPTIMIZE="%{optflags} %{build_ldflags}"
@@ -134,6 +135,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Mon Feb 26 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.4-2
+- Define USE_SYSTEMD at build time (#1549027)
+
 * Mon Feb 26 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.4-1
 - Update to 1.8.4 (#1543668)
 
