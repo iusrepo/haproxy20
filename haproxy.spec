@@ -7,8 +7,8 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.8.3
-Release:        5%{?dist}
+Version:        1.8.4
+Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -134,7 +134,10 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
-* Thu Feb  8 2018 Florian Weimer <fweimer@redhat.com> - 1.8.3-5
+* Mon Feb 26 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.4-1
+- Update to 1.8.4 (#1543668)
+
+* Thu Feb 08 2018 Florian Weimer <fweimer@redhat.com> - 1.8.3-5
 - Build halog and iprange with linker flags from redhat-rpm-config
 - Tell build to include <crypt.h>
 
