@@ -7,7 +7,7 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.8.6
+Version:        1.8.7
 Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
@@ -135,6 +135,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Mon Apr 09 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.7-1
+- Update to 1.8.7 (#1560121)
+
 * Fri Apr 06 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.6-1
 - Update to 1.8.6 (#1560121)
 
