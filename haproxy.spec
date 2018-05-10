@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.8.8
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -57,7 +57,7 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 USE_LUA=1 USE_CRYPT_H=1 USE_SYSTEMD=1 USE_LINUX_TPROXY=1 ${regparm_opts} ADDINC="%{optflags}" ADDLIB="%{__global_ldflags}"
+%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 USE_LUA=1 USE_CRYPT_H=1 USE_SYSTEMD=1 USE_LINUX_TPROXY=1 USE_GETADDRINFO=1 ${regparm_opts} ADDINC="%{optflags}" ADDLIB="%{__global_ldflags}"
 
 pushd contrib/halog
 %{__make} ${halog} OPTIMIZE="%{optflags} %{build_ldflags}"
@@ -135,8 +135,12 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Thu May 10 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.8-2
+- Build with USE_GETADDRINFO option
+
 * Thu Apr 19 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.8-1
 - Update to 1.8.8 (#1560121)
+
 * Mon Apr 09 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.7-1
 - Update to 1.8.7 (#1560121)
 
