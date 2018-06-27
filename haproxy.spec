@@ -7,8 +7,8 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.8.8
-Release:        2%{?dist}
+Version:        1.8.9
+Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -135,6 +135,9 @@ exit 0
 %attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Mon May 21 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.9-1
+- Update to 1.8.9 (#1580036)
+
 * Thu May 10 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.8-2
 - Build with USE_GETADDRINFO option
 
