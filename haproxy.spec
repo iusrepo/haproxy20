@@ -1,6 +1,6 @@
 %define haproxy_user    haproxy
 %define haproxy_group   %{haproxy_user}
-%define haproxy_home    %{_localstatedir}/lib/haproxy
+%define haproxy_homedir %{_localstatedir}/lib/haproxy
 %define haproxy_confdir %{_sysconfdir}/haproxy
 %define haproxy_datadir %{_datadir}/haproxy
 
@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.8.12
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -76,7 +76,7 @@ popd
 %{__install} -p -D -m 0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 %{__install} -p -D -m 0644 %{SOURCE4} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
 %{__install} -p -D -m 0644 %{SOURCE5} %{buildroot}%{_mandir}/man1/halog.1
-%{__install} -d -m 0755 %{buildroot}%{haproxy_home}
+%{__install} -d -m 0755 %{buildroot}%{haproxy_homedir}
 %{__install} -d -m 0755 %{buildroot}%{haproxy_datadir}
 %{__install} -d -m 0755 %{buildroot}%{_bindir}
 %{__install} -p -m 0755 ./contrib/halog/halog %{buildroot}%{_bindir}/halog
@@ -103,7 +103,7 @@ done
 getent group %{haproxy_group} >/dev/null || \
     groupadd -r %{haproxy_group}
 getent passwd %{haproxy_user} >/dev/null || \
-    useradd -r -g %{haproxy_user} -d %{haproxy_home} \
+    useradd -r -g %{haproxy_user} -d %{haproxy_homedir} \
     -s /sbin/nologin -c "haproxy" %{haproxy_user}
 exit 0
 
@@ -120,6 +120,7 @@ exit 0
 %doc doc/* examples/*
 %doc CHANGELOG README ROADMAP VERSION
 %license LICENSE
+%dir %{haproxy_homedir}
 %dir %{haproxy_confdir}
 %dir %{haproxy_datadir}
 %{haproxy_datadir}/*
@@ -131,9 +132,11 @@ exit 0
 %{_bindir}/halog
 %{_bindir}/iprange
 %{_mandir}/man1/*
-%attr(-,%{haproxy_user},%{haproxy_group}) %dir %{haproxy_home}
 
 %changelog
+* Tue Jul 10 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.12-2
+- Fix ownership of /var/lib/haproxy/ to avoid selinux DAC override errors (#1597076)
+
 * Thu Jun 28 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.12-1
 - Update to 1.8.12 (#1580036)
 
