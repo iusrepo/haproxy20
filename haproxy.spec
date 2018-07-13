@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.8.12
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -134,6 +134,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.8.12-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Tue Jul 10 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.12-2
 - Fix ownership of /var/lib/haproxy/ to avoid selinux DAC override errors (#1597076)
 
