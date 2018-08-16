@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.8.12
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -22,6 +22,7 @@ Source3:        %{name}.logrotate
 Source4:        %{name}.sysconfig
 Source5:        halog.1
 
+BuildRequires:  gcc
 BuildRequires:  lua-devel
 BuildRequires:  pcre-devel
 BuildRequires:  zlib-devel
@@ -134,6 +135,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Thu Aug 16 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.12-4
+- Add BuildRequires gcc (#1604308)
+
 * Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.8.12-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
