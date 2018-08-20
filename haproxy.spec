@@ -7,8 +7,8 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.8.12
-Release:        4%{?dist}
+Version:        1.8.13
+Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -135,6 +135,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Mon Aug 20 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.13-1
+- Update to 1.8.13 (#1610066)
+
 * Thu Aug 16 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.12-4
 - Add BuildRequires gcc (#1604308)
 
