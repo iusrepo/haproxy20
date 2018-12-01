@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.8.14
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -21,6 +21,8 @@ Source2:        %{name}.cfg
 Source3:        %{name}.logrotate
 Source4:        %{name}.sysconfig
 Source5:        halog.1
+
+Patch0: 0001-BUG-MEDIUM-auth-threads-use-of-crypt-not-thread-safe.patch
 
 BuildRequires:  gcc
 BuildRequires:  lua-devel
@@ -51,6 +53,7 @@ availability environments. Indeed, it can:
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 regparm_opts=
@@ -135,6 +138,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Sat Dec 01 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.14-2
+- Use of crpyt() is not thread safe (#1643941)
+
 * Thu Sep 20 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.14-1
 - Update to 1.8.14 (#1610066)
 
