@@ -7,7 +7,7 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.8.15
+Version:        1.8.16
 Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
@@ -135,6 +135,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Sat Dec 22 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.16-1
+- Update to 1.8.16
+
 * Thu Dec 13 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.15-1
 - Update to 1.8.15
 - Fix denial of service attack via infinite recursion (CVE-2018-20103, #1658881)
