@@ -7,7 +7,7 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.8.16
+Version:        1.8.17
 Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
@@ -135,6 +135,10 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Wed Jan 09 2019 Ryan O'Hara <rohara@redhat.com> - 1.8.17-1
+- Update to 1.8.17
+- Fix handling of priority flag in HEADERS frame in HTTP/2 decoder (CVE-2018-20615)
+
 * Sat Dec 22 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.16-1
 - Update to 1.8.16
 
