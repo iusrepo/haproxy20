@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.8.17
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -135,6 +135,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Mon Jan 14 2019 Björn Esser <besser82@fedoraproject.org> - 1.8.17-2
+- Rebuilt for libcrypt.so.2 (#1666033)
+
 * Wed Jan 09 2019 Ryan O'Hara <rohara@redhat.com> - 1.8.17-1
 - Update to 1.8.17
 - Fix handling of priority flag in HEADERS frame in HTTP/2 decoder (CVE-2018-20615)
