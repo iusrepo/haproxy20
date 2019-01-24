@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.8.17
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -135,6 +135,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Thu Jan 24 2019 Petr Pisar <ppisar@redhat.com> - 1.8.17-3
+- Rebuild against patched libpcreposix library (bug #1667614)
+
 * Mon Jan 14 2019 Björn Esser <besser82@fedoraproject.org> - 1.8.17-2
 - Rebuilt for libcrypt.so.2 (#1666033)
 
