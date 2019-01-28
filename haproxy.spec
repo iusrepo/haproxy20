@@ -11,7 +11,6 @@ Version:        1.8.17
 Release:        3%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
-Group:          System Environment/Daemons
 License:        GPLv2+
 
 URL:            http://www.haproxy.org/
