@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.8.17
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 License:        GPLv2+
@@ -134,6 +134,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Fri Feb 01 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.8.17-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Thu Jan 24 2019 Petr Pisar <ppisar@redhat.com> - 1.8.17-3
 - Rebuild against patched libpcreposix library (bug #1667614)
 
