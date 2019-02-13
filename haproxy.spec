@@ -7,8 +7,8 @@
 %global _hardened_build 1
 
 Name:           haproxy
-Version:        1.8.17
-Release:        4%{?dist}
+Version:        1.8.19
+Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 License:        GPLv2+
@@ -134,6 +134,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Wed Feb 13 2019 Ryan O'Hara <rohara@redhat.com> - 1.8.19-1
+- Update to 1.8.19
+
 * Fri Feb 01 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.8.17-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
