@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.8.20
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 License:        GPLv2+
@@ -132,6 +132,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.8.20-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Fri May 17 2019 Ryan O'Hara <rohara@redhat.com> - 1.8.20-1
 - Update to 1.8.20
 
