@@ -160,6 +160,7 @@ exit 0
 %changelog
 * Tue Aug 27 2019 Carl George <carl@george.computer> - 2.0.5-2
 - Port from Fedora to IUS
+- Read options from /etc/sysconfig/haproxy
 
 * Mon Aug 19 2019 Ryan O'Hara <rohara@redhat.com> - 2.0.5-1
 - Update to 2.0.5 (#1742544)
