@@ -8,7 +8,7 @@
 
 Name:           haproxy20
 Version:        2.0.5
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 License:        GPLv2+
@@ -158,6 +158,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Thu Aug 29 2019 Carl George <carl@george.computer> - 2.0.5-3
+- Don't try to use system-wide crypto-policies, not present in EL
+
 * Tue Aug 27 2019 Carl George <carl@george.computer> - 2.0.5-2
 - Port from Fedora to IUS
 - Read options from /etc/sysconfig/haproxy
