@@ -7,8 +7,8 @@
 %global _hardened_build 1
 
 Name:           haproxy20
-Version:        2.0.5
-Release:        3%{?dist}
+Version:        2.0.6
+Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 License:        GPLv2+
@@ -158,6 +158,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Fri Sep 13 2019 Carl George <carl@george.computer> - 2.0.6-1
+- Latest upstream
+
 * Thu Aug 29 2019 Carl George <carl@george.computer> - 2.0.5-3
 - Don't try to use system-wide crypto-policies, not present in EL
 
