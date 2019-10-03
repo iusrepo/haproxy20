@@ -7,7 +7,7 @@
 %global _hardened_build 1
 
 Name:           haproxy20
-Version:        2.0.6
+Version:        2.0.7
 Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
@@ -107,7 +107,7 @@ popd
 %{__install} -p -m 0755 ./contrib/iprange/iprange %{buildroot}%{_bindir}/iprange
 %{__install} -p -m 0644 ./examples/errorfiles/* %{buildroot}%{haproxy_datadir}
 
-for httpfile in $(find ./examples/errorfiles/ -type f) 
+for httpfile in $(find ./examples/errorfiles/ -type f)
 do
     %{__install} -p -m 0644 $httpfile %{buildroot}%{haproxy_datadir}
 done
@@ -158,6 +158,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Thu Oct 03 2019 Eugenio Cordoba <e.cordoba.24@gmail.com> - 2.0.7-1
+- Update to 2.0.7
+
 * Fri Sep 13 2019 Carl George <carl@george.computer> - 2.0.6-1
 - Latest upstream
 
@@ -534,7 +537,7 @@ exit 0
 - remove upstream patches, they are now part of source distribution
 
 * Sat Nov 22 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.3.15.6-2
-- apply upstream patches 
+- apply upstream patches
 
 * Sat Nov 15 2008 Jeremy Hinegardner <jeremy at hinegardner dot org> - 1.3.15.6-1
 - update to 1.3.15.6
