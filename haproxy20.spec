@@ -7,7 +7,7 @@
 %global _hardened_build 1
 
 Name:           haproxy20
-Version:        2.0.7
+Version:        2.0.8
 Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
@@ -158,6 +158,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Thu Oct 24 2019 judd obannon <judd.obannon@rackspace.com> - 2.0.8-1
+- Latest upstream
+
 * Thu Oct 03 2019 Eugenio Cordoba <e.cordoba.24@gmail.com> - 2.0.7-1
 - Update to 2.0.7
 
