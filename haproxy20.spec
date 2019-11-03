@@ -158,7 +158,7 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
-* Fri Oct 24 2019 Seth Ryder <seth@sethryder.com> - 2.0.8-1
+* Thu Oct 24 2019 Seth Ryder <seth@sethryder.com> - 2.0.8-1
 - Latest upstream
 
 * Thu Oct 03 2019 Eugenio Cordoba <e.cordoba.24@gmail.com> - 2.0.7-1
