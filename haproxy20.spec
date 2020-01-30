@@ -82,6 +82,7 @@ regparm_opts="USE_REGPARM=1"
     ${regparm_opts} \
     ADDINC="%{optflags}" \
     ADDLIB="%{__global_ldflags}" \
+    EXTRA_OBJS="contrib/prometheus-exporter/service-prometheus.o"
 
 pushd contrib/halog
 %{__make} ${halog} OPTIMIZE="%{optflags} %{build_ldflags}"
