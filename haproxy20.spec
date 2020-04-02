@@ -161,6 +161,7 @@ exit 0
 %changelog
 * Thu Apr 02 2020 Carl George <carl@george.computer> - 2.0.14-1
 - Latest upstream, including fix for CVE-2020-11100
+- Build with Prometheus exporter service
 
 * Wed Nov 27 2019 Carl George <carl@george.computer> - 2.0.10-1
 - Latest upstream
