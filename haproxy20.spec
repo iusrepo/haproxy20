@@ -7,7 +7,7 @@
 %global _hardened_build 1
 
 Name:           haproxy20
-Version:        2.0.10
+Version:        2.0.14
 Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
@@ -158,6 +158,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Thu Apr 02 2020 Carl George <carl@george.computer> - 2.0.14-1
+- Latest upstream, including fix for CVE-2020-11100
+
 * Wed Nov 27 2019 Carl George <carl@george.computer> - 2.0.10-1
 - Latest upstream
 
