@@ -6,6 +6,8 @@
 
 %global _hardened_build 1
 
+%bcond_without lua
+
 Name:           haproxy20
 Version:        2.0.16
 Release:        1%{?dist}
@@ -22,11 +24,13 @@ Source4:        haproxy.sysconfig
 Source5:        halog.1
 
 BuildRequires:  gcc
+%if %{with lua}
 # src/hlua.c: "Requires Lua 5.3 or later."
 %if %{defined rhel}
 BuildRequires:  lua53u-devel
 %else
 BuildRequires:  lua-devel >= 5.3
+%endif
 %endif
 BuildRequires:  pcre2-devel
 BuildRequires:  zlib-devel
@@ -70,10 +74,12 @@ regparm_opts="USE_REGPARM=1"
     USE_OPENSSL=1 \
     USE_PCRE2=1 \
     USE_ZLIB=1 \
+%if %{with lua}
     USE_LUA=1 \
 %if %{defined rhel}
     LUA_LIB_NAME=lua-5.3 \
     LUA_INC=%{_includedir}/lua-5.3 \
+%endif
 %endif
     USE_CRYPT_H=1 \
     USE_SYSTEMD=1 \
