@@ -9,7 +9,7 @@
 %bcond_without lua
 
 Name:           haproxy20
-Version:        2.0.20
+Version:        2.0.23
 Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
@@ -165,6 +165,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Thu Aug  5 2021 Christian Boenning <christian@boenning.io> - 2.0.23-1
+- Upstream HAProxy 2.0.23
+
 * Mon Feb 01 2021 Christian Boenning <christian@boenning.io> - 2.0.20-1
 - Latest upstream
 
