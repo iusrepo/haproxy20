@@ -34,7 +34,7 @@ BuildRequires:  lua-devel >= 5.3
 %endif
 BuildRequires:  pcre2-devel
 BuildRequires:  zlib-devel
-BuildRequires:  openssl-devel
+BuildRequires:  openssl11-devel
 BuildRequires:  systemd-devel
 BuildRequires:  systemd
 
@@ -72,6 +72,8 @@ regparm_opts="USE_REGPARM=1"
     CPU="generic" \
     TARGET="linux-glibc" \
     USE_OPENSSL=1 \
+    SSL_LIB="$(pkg-config --libs-only-L openssl11 | sed -e 's/^-L//')" \
+    SSL_INC="$(pkg-config --cflags-only-I openssl11 | sed -e 's/^-I//')" \
     USE_PCRE2=1 \
     USE_ZLIB=1 \
 %if %{with lua}
@@ -167,6 +169,7 @@ exit 0
 %changelog
 * Thu Aug  5 2021 Christian Boenning <christian@boenning.io> - 2.0.23-1
 - Upstream HAProxy 2.0.23
+- Build against OpenSSL 1.1.1
 
 * Mon Feb 01 2021 Christian Boenning <christian@boenning.io> - 2.0.20-1
 - Latest upstream
