@@ -9,7 +9,7 @@
 %bcond_without lua
 
 Name:           haproxy20
-Version:        2.0.27
+Version:        2.0.29
 Release:        1%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
