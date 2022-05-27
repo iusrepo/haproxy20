@@ -167,6 +167,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Fri May 27 2022 Ilya Shipitsin <chipitsine@gmail.com> - 2.0.29-1
+- HAProxy 2.0.29
+
 * Thu Jan 27 2022 Christian Boenning <christian@boenning.io> - 2.0.27-1
 - HAProxy 2.0.27
 
