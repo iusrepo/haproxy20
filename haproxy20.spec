@@ -10,7 +10,7 @@
 
 Name:           haproxy20
 Version:        2.0.29
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 License:        GPLv2+
