@@ -10,7 +10,7 @@
 
 Name:           haproxy20
 Version:        2.0.29
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        HAProxy reverse proxy for high availability environments
 
 License:        GPLv2+
@@ -83,10 +83,8 @@ regparm_opts="USE_REGPARM=1"
     LUA_INC=%{_includedir}/lua-5.3 \
 %endif
 %endif
-    USE_CRYPT_H=1 \
     USE_SYSTEMD=1 \
     USE_LINUX_TPROXY=1 \
-    USE_GETADDRINFO=1 \
     ${regparm_opts} \
     ADDINC="%{optflags}" \
     ADDLIB="%{__global_ldflags}" \
@@ -167,6 +165,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Thu Jun  2 2022 Ilya Shipitsin <chipitsine@gmail.com> - 2.0.20-2
+- HAProxy 2.0.20-2, cleanup build options
+
 * Fri May 27 2022 Ilya Shipitsin <chipitsine@gmail.com> - 2.0.29-1
 - HAProxy 2.0.29
 
