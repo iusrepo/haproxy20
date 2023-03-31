@@ -167,7 +167,7 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
-* Fri Mar 31 2022 Christian Boenning <christian@boenning.io> - 2.0.31-1
+* Fri Mar 31 2023 Christian Boenning <christian@boenning.io> - 2.0.31-1
 - HAProxy 2.0.31
 
 * Wed Jan 11 2023 Jeff Sheltren <jeff@tag1consulting.com> - 2.0.30-1
